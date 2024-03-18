@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.tea.mapper.ProductMapper">
+
+    <resultMap type="Product" id="ProductResultMap">
+        <id property="productId" column="product_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="description" column="description"/>
+        <result property="price" column="price"/>
+        <result property="merchantId" column="merchant_id"/>
+    </resultMap>
+
+    <!-- 获取所有商品 -->
+    <select id="getAllProducts" resultMap="ProductResultMap">
+        SELECT * FROM tos_product
+    </select>
+
+    <!-- 根据商品ID获取商品信息 -->
+    <select id="getProductById" parameterType="long" resultMap="ProductResultMap">
+        SELECT * FROM tos_product WHERE product_id = #{productId}
+    </select>
+
+    <!-- 添加商品 -->
+    <insert id="addProduct" parameterType="Product">
+        INSERT INTO tos_product (product_name, description, price, merchant_id)
+        VALUES (#{productName}, #{description}, #{price}, #{merchantId})
+    </insert>
+
+    <!-- 更新商品信息 -->
+    <update id="updateProduct" parameterType="Product">
+        UPDATE tos_product SET product_name = #{productName}, description = #{description},
+                               price = #{price}, merchant_id = #{merchantId}
+        WHERE product_id = #{productId}
+    </update>
+
+    <!-- 删除商品 -->
+    <delete id="deleteProduct" parameterType="Long">
+        DELETE FROM tos_product WHERE product_id = #{productId}
+    </delete>
+
+    <!-- 根据商家ID查询商品数量 -->
+    <select id="countByMerchantId" parameterType="Long" resultType="int">
+        SELECT COUNT(*) FROM tos_product WHERE merchant_id = #{merchantId}
+    </select>
+
+</mapper>
