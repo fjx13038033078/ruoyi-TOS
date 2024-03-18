@@ -35,6 +35,9 @@ public class SysRegisterService
     @Autowired
     private RedisCache redisCache;
 
+    @Autowired
+    private ISysUserService iSysUserService;
+
     /**
      * 注册
      */
