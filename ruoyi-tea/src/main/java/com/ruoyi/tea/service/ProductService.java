@@ -18,6 +18,14 @@ public interface ProductService {
     List<Product> getAllProducts();
 
     /**
+     * 根据店铺ID查询商品列表
+     *
+     * @param shopId 店铺ID
+     * @return 店铺列表
+     */
+    List<Product> getProductsByShopId(Long shopId);
+
+    /**
      * 根据商品ID查询商品信息
      *
      * @param productId 商品ID

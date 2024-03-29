@@ -31,6 +31,11 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.getAllProducts();
     }
 
+    @Override
+    public List<Product> getProductsByShopId(Long shopId){
+        return productMapper.getProductsByShopId(shopId);
+    }
+
     /**
      * 根据商品ID查询商品信息
      *

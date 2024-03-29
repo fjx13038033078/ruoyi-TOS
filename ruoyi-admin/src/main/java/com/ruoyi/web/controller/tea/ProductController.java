@@ -33,6 +33,12 @@ public class ProductController extends BaseController {
         return getDataTable(allProducts);
     }
 
+    //根据店铺ID获取商品列表
+    @GetMapping("/list")
+    public AjaxResult listProductsByShopId(@RequestParam Long shopId) {
+        return success(productService.getProductsByShopId(shopId));
+    }
+
     // 根据商品ID获取商品信息
     @GetMapping("/detail")
     public AjaxResult getProductById(@RequestParam Long productId) {

@@ -40,7 +40,7 @@ public class Shop implements Serializable {
      * 店主姓名
      */
     @TableField(exist = false)
-    private Long ownerName;
+    private String ownerName;
 
     /**
      * 店铺描述

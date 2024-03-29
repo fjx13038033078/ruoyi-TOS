@@ -23,6 +23,11 @@
         SELECT * FROM tos_product WHERE product_id = #{productId}
     </select>
 
+    <!-- 根据商品ID获取商品信息 -->
+    <select id="getProductsByShopId" parameterType="long" resultMap="ProductResultMap">
+        SELECT * FROM tos_product WHERE shop_id = #{shopId}
+    </select>
+
     <!-- 添加商品 -->
     <insert id="addProduct" parameterType="Product">
         INSERT INTO tos_product (product_name, description, price, merchant_id, product_image, shop_id)

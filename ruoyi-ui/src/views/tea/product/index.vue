@@ -6,7 +6,7 @@
         <!-- 添加商品按钮 -->
         <el-row :gutter="20" class="mb-20" style="margin-bottom: 20px;">
           <el-col>
-            <el-button type="primary" @click="handleAddProduct" v-hasPermi="['teaproduct:add']">新增商品</el-button>
+            <el-button type="primary" @click="handleAddProduct" v-hasPermi="['tea:product:add']">新增商品</el-button>
           </el-col>
         </el-row>
 
@@ -19,9 +19,9 @@
           <el-table-column label="商家ID" prop="merchantId" align="center"></el-table-column>
           <el-table-column label="操作" align="center" width="280px">
             <template slot-scope="scope">
-              <el-button type="success" size="mini" @click="handleView(scope.row)" v-hasPermi="['teaproduct:detail']">查看</el-button>
-              <el-button type="primary" size="mini" @click="handleEdit(scope.row)" v-hasPermi="['teaproduct:edit']">编辑</el-button>
-              <el-button type="danger" size="mini" @click="handleDelete(scope.row)" v-hasPermi="['teaproduct:delete']">删除</el-button>
+              <el-button type="success" size="mini" @click="handleView(scope.row)" v-hasPermi="['tea:product:detail']">查看</el-button>
+              <el-button type="primary" size="mini" @click="handleEdit(scope.row)" v-hasPermi="['tea:product:edit']">编辑</el-button>
+              <el-button type="danger" size="mini" @click="handleDelete(scope.row)" v-hasPermi="['tea:product:delete']">删除</el-button>
             </template>
           </el-table-column>
         </el-table>

@@ -16,6 +16,11 @@
         SELECT * FROM tos_shop
     </select>
 
+    <!-- 获取所有店铺 -->
+    <select id="getShopsByOwnerId" resultMap="ShopResultMap">
+        SELECT * FROM tos_shop where owner_id = #{ownerId}
+    </select>
+
     <!-- 根据店铺ID获取店铺信息 -->
     <select id="getShopById" parameterType="long" resultMap="ShopResultMap">
         SELECT * FROM tos_shop WHERE shop_id = #{shopId}

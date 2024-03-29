@@ -11,6 +11,15 @@ export function listProducts(query) {
   })
 }
 
+// 根据店铺ID获取商品列表
+export function listProductsByShopId(shopId) {
+  return request({
+    url: '/tea/product/listByShopId',
+    method: 'get',
+    params: { shopId }
+  })
+}
+
 // 查询商品详细信息
 export function getProduct(productId) {
   return request({
