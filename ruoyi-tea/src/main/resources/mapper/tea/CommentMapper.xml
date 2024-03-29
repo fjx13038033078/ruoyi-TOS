@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.tea.mapper.CommentMapper">
 
+    <resultMap type="com.ruoyi.tea.domain.Comment" id="commentResultMap">
+        <id property="commentId" column="comment_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="content" column="content"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
     <!-- 根据商品ID获取商品评价列表 -->
     <select id="listCommentsByProductId" resultType="com.ruoyi.tea.domain.Comment">
         SELECT * FROM comment WHERE product_id = #{productId}

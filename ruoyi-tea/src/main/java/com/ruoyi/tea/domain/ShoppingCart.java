@@ -31,6 +31,12 @@ public class ShoppingCart implements Serializable {
     private Long userId;
 
     /**
+     * 用户名称
+     */
+    @TableField(exist = false)
+    private String userName;
+
+    /**
      * 商品ID
      */
     private Long productId;

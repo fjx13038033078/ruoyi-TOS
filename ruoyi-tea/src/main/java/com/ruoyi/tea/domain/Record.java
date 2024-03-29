@@ -8,57 +8,63 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 商品评论表
+ * 交易记录实体类
  *
  * @Author 范佳兴
- * @date 2024/3/18 17:09
+ * @date 2024/3/29 11:01
  */
-@TableName("tos_comment")
+@TableName("tos_balance_record")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Comment implements Serializable {
+public class Record implements Serializable {
 
     /**
-     * 评论主键
+     * 交易记录ID，主键
      */
-    private Long commentId;
+    private Long recordId;
 
     /**
-     * 商品ID
-     */
-    private Long productId;
-
-    /**
-     * 商品名称
-     */
-    @TableField(exist = false)
-    private String productName;
-
-    /**
-     * 用户ID
+     * 购买者ID
      */
     private Long userId;
 
     /**
-     * 用户姓名
+     * 购买者姓名
      */
     @TableField(exist = false)
     private String userName;
 
     /**
-     * 评论内容
+     * 店铺ID
      */
-    private String content;
+    private Long shopId;
 
     /**
-     * 评论时间
+     * 店铺名称
      */
-    private LocalDateTime createTime;
+    @TableField(exist = false)
+    private String shopName;
+
+    /**
+     * 交易额
+     */
+    private BigDecimal transactionAmount;
+
+    /**
+     * 交易时间
+     */
+    private LocalDateTime transactionTime;
+
+    /**
+     * 余额
+     */
+    private BigDecimal balance;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

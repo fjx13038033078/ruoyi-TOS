@@ -8,57 +8,44 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
- * 商品评论表
+ * 店铺实体类
  *
  * @Author 范佳兴
- * @date 2024/3/18 17:09
+ * @date 2024/3/29 11:10
  */
-@TableName("tos_comment")
+@TableName("tos_shop")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Comment implements Serializable {
-
+public class Shop implements Serializable {
     /**
-     * 评论主键
+     * 主键
      */
-    private Long commentId;
+    private Long shopId;
 
     /**
-     * 商品ID
+     * 店铺名称
      */
-    private Long productId;
+    private String shopName;
 
     /**
-     * 商品名称
+     * 店主ID
      */
-    @TableField(exist = false)
-    private String productName;
+    private Long ownerId;
 
     /**
-     * 用户ID
-     */
-    private Long userId;
-
-    /**
-     * 用户姓名
+     * 店主姓名
      */
     @TableField(exist = false)
-    private String userName;
+    private Long ownerName;
 
     /**
-     * 评论内容
+     * 店铺描述
      */
-    private String content;
-
-    /**
-     * 评论时间
-     */
-    private LocalDateTime createTime;
+    private String shopDescription;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

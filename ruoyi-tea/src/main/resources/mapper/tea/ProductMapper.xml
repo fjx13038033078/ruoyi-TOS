@@ -9,7 +9,8 @@
         <result property="productName" column="product_name"/>
         <result property="description" column="description"/>
         <result property="price" column="price"/>
-        <result property="merchantId" column="merchant_id"/>
+        <result property="shopId" column="shop_id"/>
+        <result property="productImage" column="product_image"/>
     </resultMap>
 
     <!-- 获取所有商品 -->
@@ -24,14 +25,14 @@
 
     <!-- 添加商品 -->
     <insert id="addProduct" parameterType="Product">
-        INSERT INTO tos_product (product_name, description, price, merchant_id)
-        VALUES (#{productName}, #{description}, #{price}, #{merchantId})
+        INSERT INTO tos_product (product_name, description, price, merchant_id, product_image, shop_id)
+        VALUES (#{productName}, #{description}, #{price}, #{merchantId}, #{productImage}, #{shopId})
     </insert>
 
     <!-- 更新商品信息 -->
     <update id="updateProduct" parameterType="Product">
         UPDATE tos_product SET product_name = #{productName}, description = #{description},
-                               price = #{price}, merchant_id = #{merchantId}
+                               price = #{price}, shop_id = #{shopId}, product_image = #{productImage}
         WHERE product_id = #{productId}
     </update>
 

@@ -33,6 +33,21 @@ public class Product implements Serializable {
     private String productName;
 
     /**
+     * 店铺ID
+     */
+    private Long shopId;
+
+    /**
+     * 店铺名称
+     */
+    private String shopName;
+
+    /**
+     * 商品图片
+     */
+    private String productImage;
+
+    /**
      * 商品描述
      */
     private String description;
@@ -41,11 +56,6 @@ public class Product implements Serializable {
      * 商品价格
      */
     private Long price;
-
-    /**
-     * 商家ID
-     */
-    private Long merchantId;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -1,61 +1,36 @@
 <template>
   <div>
-    <div id="curtain">
-      <h1 data-heading="场">羽毛球场预约管理系统</h1>
-    </div>
+<!--    <div id="curtain">-->
+<!--      <h1 data-heading="管">茶商城管理系统</h1>-->
+<!--    </div>-->
     <div>
-      <el-carousel :interval="4000" type="card" height="300px">
-        <el-carousel-item>
-          <a href="https://www.baidu.com" target="_blank">
-            <img src="../assets/images/01.jpg" alt="Image 1" style="width: 100%;">
-          </a>
-        </el-carousel-item>
-        <el-carousel-item>
-          <a href="https://www.jd.com" target="_blank">
-            <img src="../assets/images/02.jpg" alt="Image 2" style="width: 100%;">
-          </a>
-        </el-carousel-item>
-        <el-carousel-item>
-          <a href="https://www.taobao.com" target="_blank">
-            <img src="../assets/images/03.jpg" alt="Image 3" style="width: 100%;">
-          </a>
-        </el-carousel-item>
-      </el-carousel>
-      <!-- 通知公告 -->
       <el-row style="margin-top: 20px;">
         <el-col :span="12">
           <el-card style="margin-right: 20px; height: 420px;">
-            <h3 slot="header">通知公告</h3>
-            <el-table v-loading="loading" :data="noticeList" @selection-change="handleSelectionChange">
-              <el-table-column label="序号" align="center" prop="noticeId" width="100"/>
-              <el-table-column
-                label="公告标题"
-                align="center"
-                prop="noticeTitle"
-                :show-overflow-tooltip="true"
-              >
-                <template slot-scope="scope">
-                  <span @click="showNoticeContent(scope.row)">{{ scope.row.noticeTitle }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="公告类型" align="center" prop="noticeType" width="100">
-                <template slot-scope="scope">
-                  <dict-tag :options="dict.type.sys_notice_type" :value="scope.row.noticeType"/>
-                </template>
-              </el-table-column>
-              <el-table-column label="创建时间" align="center" prop="createTime" width="100">
-                <template slot-scope="scope">
-                  <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
-                </template>
-              </el-table-column>
-            </el-table>
+            <h3 slot="header">站外导航</h3>
+            <el-carousel :interval="4000" height="300px">
+              <el-carousel-item>
+                <a href="https://www.baidu.com" target="_blank">
+                  <img src="../assets/images/01.jpg" alt="Image 1" style="width: 100%;">
+                </a>
+              </el-carousel-item>
+              <el-carousel-item>
+                <a href="https://www.jd.com" target="_blank">
+                  <img src="../assets/images/02.jpg" alt="Image 2" style="width: 100%;">
+                </a>
+              </el-carousel-item>
+              <el-carousel-item>
+                <a href="https://www.taobao.com" target="_blank">
+                  <img src="../assets/images/03.jpg" alt="Image 3" style="width: 100%;">
+                </a>
+              </el-carousel-item>
+            </el-carousel>
           </el-card>
         </el-col>
-        <!-- 场馆场地数量 -->
         <el-col :span="12">
           <el-card style="margin-right: 20px; height: 420px;">
-            <h3 slot="header">场地数量</h3>
-              <div id="venueCourtChart" style="height: 300px;"></div> <!-- echarts 柱状图 -->
+            <h3 slot="header">统计图表</h3>
+            <div id="venueCourtChart" style="height: 300px;"></div> <!-- echarts 柱状图 -->
           </el-card>
         </el-col>
       </el-row>
@@ -91,8 +66,6 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 公告表格数据
-      noticeList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -137,15 +110,6 @@ export default {
       listNotice(this.queryParams).then(response => {
         this.noticeList = response.rows;
         this.total = response.total;
-        this.loading = false;
-      });
-    },
-    showNoticeContent(row) {
-      this.loading = true;
-      getNotice(row.noticeId).then((response) => {
-        this.selectedNotice.title = response.data.noticeTitle;
-        this.selectedNotice.content = response.data.noticeContent;
-        this.showNoticeDialog = true;
         this.loading = false;
       });
     },

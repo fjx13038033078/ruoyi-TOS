@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.tea.mapper.ShoppingCartMapper">
+
+    <resultMap type="ShoppingCart" id="ShoppingCartResultMap">
+        <id property="cartId" column="cart_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="quantity" column="quantity"/>
+    </resultMap>
+
+    <!-- 获取购物车列表 -->
+    <select id="getShoppingCartList" resultMap="ShoppingCartResultMap">
+        SELECT * FROM tos_shopping_cart
+    </select>
+
+    <!-- 根据购物车ID查询购物车信息 -->
+    <select id="getShoppingCartById" parameterType="long" resultMap="ShoppingCartResultMap">
+        SELECT * FROM tos_shopping_cart WHERE cart_id = #{cartId}
+    </select>
+
+    <!-- 添加商品到购物车 -->
+    <insert id="addProductToShoppingCart" parameterType="ShoppingCart">
+        INSERT INTO tos_shopping_cart (user_id, product_id, quantity)
+        VALUES (#{userId}, #{productId}, #{quantity})
+    </insert>
+
+    <!-- 更新购物车商品数量 -->
+    <update id="updateProductQuantity" parameterType="ShoppingCart">
+        UPDATE tos_shopping_cart SET quantity = #{quantity}
+        WHERE cart_id = #{cartId}
+    </update>
+
+    <!-- 从购物车删除商品 -->
+    <delete id="deleteProductFromShoppingCart" parameterType="Long">
+        DELETE FROM tos_shopping_cart WHERE cart_id = #{cartId}
+    </delete>
+
+</mapper>
