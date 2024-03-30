@@ -1,7 +1,9 @@
 package com.ruoyi.tea.service.impl;
 import com.ruoyi.tea.domain.Product;
+import com.ruoyi.tea.domain.Shop;
 import com.ruoyi.tea.mapper.ProductMapper;
 import com.ruoyi.tea.service.ProductService;
+import com.ruoyi.tea.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductMapper productMapper;
 
+    private final ShopService shopService;
+
     /**
      * 获取所有商品列表
      *
@@ -28,7 +32,9 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public List<Product> getAllProducts() {
-        return productMapper.getAllProducts();
+        List<Product> allProducts = productMapper.getAllProducts();
+        fillShopName(allProducts);
+        return allProducts;
     }
 
     @Override
@@ -84,13 +90,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
-     * 根据商家ID查询商品数量
-     *
-     * @param merchantId 商家ID
-     * @return 商品数量
+     * 填充商品名称
+     * @param products
      */
-    @Override
-    public int countByMerchantId(Long merchantId) {
-        return productMapper.countByMerchantId(merchantId);
+    private void fillShopName(List<Product> products){
+        for (Product product : products){
+            Long shopId = product.getShopId();
+            Shop shopById = shopService.getShopById(shopId);
+            product.setShopName(shopById.getShopName());
+        }
     }
 }

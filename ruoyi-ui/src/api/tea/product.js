@@ -55,12 +55,3 @@ export function deleteProduct(productId) {
     params: { productId }
   })
 }
-
-// 根据商家ID查询商品数量
-export function countByMerchantId(merchantId) {
-  return request({
-    url: '/tea/product/countByMerchantId',
-    method: 'get',
-    params: { merchantId }
-  })
-}

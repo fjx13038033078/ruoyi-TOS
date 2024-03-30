@@ -32,8 +32,8 @@ public class ShopController extends BaseController {
 
     // 根据店主ID获取店铺列表
     @GetMapping("/listByOwner")
-    public AjaxResult getShopsByOwnerId(@RequestParam Long ownerId) {
-        return success(shopService.getShopsByOwnerId(ownerId));
+    public AjaxResult getShopsByOwnerId() {
+        return success(shopService.getShopsByOwnerId());
     }
 
     // 根据店铺ID获取店铺信息

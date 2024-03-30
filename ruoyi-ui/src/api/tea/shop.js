@@ -10,11 +10,10 @@ export function listShops(query) {
 }
 
 // 根据店主ID获取店铺列表
-export function getShopsByOwnerId(ownerId) {
+export function getShopsByOwnerId() {
   return request({
-    url: '/listByOwner',
+    url: '/tea/shop/listByOwner',
     method: 'get',
-    params: { ownerId }
   })
 }
 

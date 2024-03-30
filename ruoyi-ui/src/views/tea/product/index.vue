@@ -13,15 +13,21 @@
         <!-- 商品列表 -->
         <el-table :data="productList" v-loading="loading" style="width: 100%" border>
           <el-table-column label="商品ID" prop="productId" align="center"></el-table-column>
+          <el-table-column label="店铺名称" prop="shopName" align="center"></el-table-column>
           <el-table-column label="商品名称" prop="productName" align="center"></el-table-column>
           <el-table-column label="商品描述" prop="description" align="center"></el-table-column>
           <el-table-column label="商品价格" prop="price" align="center"></el-table-column>
-          <el-table-column label="商家ID" prop="merchantId" align="center"></el-table-column>
           <el-table-column label="操作" align="center" width="280px">
             <template slot-scope="scope">
-              <el-button type="success" size="mini" @click="handleView(scope.row)" v-hasPermi="['tea:product:detail']">查看</el-button>
-              <el-button type="primary" size="mini" @click="handleEdit(scope.row)" v-hasPermi="['tea:product:edit']">编辑</el-button>
-              <el-button type="danger" size="mini" @click="handleDelete(scope.row)" v-hasPermi="['tea:product:delete']">删除</el-button>
+              <el-button type="success" size="mini" @click="handleView(scope.row)" v-hasPermi="['tea:product:detail']">
+                查看
+              </el-button>
+              <el-button type="primary" size="mini" @click="handleEdit(scope.row)" v-hasPermi="['tea:product:edit']">
+                编辑
+              </el-button>
+              <el-button type="danger" size="mini" @click="handleDelete(scope.row)" v-hasPermi="['tea:product:delete']">
+                删除
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -40,6 +46,17 @@
           <!-- 对话框内容 -->
           <div>
             <el-form :model="productForm" label-width="100px">
+              <!-- 店铺名称下拉选择 -->
+              <el-form-item label="店铺名称">
+                <el-select v-model="productForm.shopId" placeholder="请选择店铺" :disabled="isReadOnly">
+                  <el-option
+                    v-for="shop in shopOptions"
+                    :key="shop.shopId"
+                    :label="shop.shopName"
+                    :value="shop.shopId"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
               <!-- 商品名称 -->
               <el-form-item label="商品名称">
                 <el-input v-model="productForm.productName" :disabled="isReadOnly"></el-input>
@@ -52,9 +69,14 @@
               <el-form-item label="商品价格">
                 <el-input v-model="productForm.price" :disabled="isReadOnly"></el-input>
               </el-form-item>
-              <!-- 商家ID -->
-              <el-form-item label="商家ID">
-                <el-input v-model="productForm.merchantId" :disabled="isReadOnly"></el-input>
+              <!-- 根据当前模式决定显示 ImageUpload 或 ImagePreview -->
+              <el-form-item label="商品图片">
+                <template v-if="!isReadOnly">
+                  <ImageUpload v-model="productForm.productImage" :disabled="isReadOnly"><</ImageUpload>
+                </template>
+                <template v-else>
+                  <ImagePreview :src="productForm.productImage" :disabled="isReadOnly"></ImagePreview>
+                </template>
               </el-form-item>
             </el-form>
           </div>
@@ -71,6 +93,7 @@
 
 <script>
 import {listProducts, addProduct, updateProduct, deleteProduct, getProduct} from '@/api/tea/product'
+import {getShopsByOwnerId} from "@/api/tea/shop";
 
 export default {
   data() {
@@ -79,16 +102,19 @@ export default {
       loading: true,
       activeTab: 'product', // 当前激活的选项卡，默认为商品管理
       productList: [], // 商品列表数据
+      shopOptions: [], //店铺选项列表
       // 总条数
       totalProducts: 0,
       dialogVisible: false, // 控制新增/编辑商品对话框的显示与隐藏
       dialogTitle: '', // 对话框标题
       dialogButtonText: '', // 对话框按钮文本
       productForm: { // 新增/编辑商品表单
+        shopId: '',
+        shopName: '',
         productName: '',
         description: '',
         price: null,
-        merchantId: null
+        productImage:''
       },
       isReadOnly: false, // 是否只读模式
       // 查询参数
@@ -101,6 +127,7 @@ export default {
   created() {
     // 在页面加载时获取商品列表
     this.fetchProducts()
+    this.fetchShops()
   },
   methods: {
     // 获取商品列表
@@ -111,6 +138,16 @@ export default {
         this.totalProducts = response.total
         this.loading = false
       })
+    },
+
+    // 获取店铺列表
+    fetchShops() {
+      getShopsByOwnerId().then(response => {
+        this.shopOptions = response.data.map(shop => ({
+          shopId: shop.shopId,
+          shopName: shop.shopName
+        }));
+      });
     },
 
     // 清空表单数据

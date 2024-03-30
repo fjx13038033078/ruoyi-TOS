@@ -62,10 +62,4 @@ public class ProductController extends BaseController {
     public AjaxResult deleteProduct(@RequestParam Long productId) {
         return toAjax(productService.deleteProduct(productId));
     }
-
-    // 根据商家ID查询商品数量
-    @GetMapping(value = "/countByMerchantId")
-    public AjaxResult countByMerchantId(@RequestParam Long merchantId) {
-        return success(productService.countByMerchantId(merchantId));
-    }
 }

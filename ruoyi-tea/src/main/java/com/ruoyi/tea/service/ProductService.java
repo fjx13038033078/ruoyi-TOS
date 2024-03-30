@@ -56,12 +56,4 @@ public interface ProductService {
      * @return 删除成功返回 true，否则返回 false
      */
     boolean deleteProduct(Long productId);
-
-    /**
-     * 根据商家ID查询商品数量
-     *
-     * @param merchantId 商家ID
-     * @return 商品数量
-     */
-    int countByMerchantId(Long merchantId);
 }

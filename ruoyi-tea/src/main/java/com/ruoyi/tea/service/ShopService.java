@@ -23,9 +23,9 @@ public interface ShopService {
      * 根据用户ID查询店铺列表
      *
      * @return 店铺列表
-     * @param ownerId 店主ID
+     *
      */
-    List<Shop> getShopsByOwnerId(Long ownerId);
+    List<Shop> getShopsByOwnerId();
 
     /**
      * 根据店铺ID查询店铺信息

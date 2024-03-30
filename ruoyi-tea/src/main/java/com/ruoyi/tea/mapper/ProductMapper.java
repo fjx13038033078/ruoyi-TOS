@@ -54,14 +54,6 @@ public interface ProductMapper {
     int deleteProduct(Long productId);
 
     /**
-     * 根据商家ID查询商品数量
-     *
-     * @param merchantId 商家ID
-     * @return 商品数量
-     */
-    int countByMerchantId(Long merchantId);
-
-    /**
      * 根据店铺ID查询商品列表
      *
      * @param shopId 店主ID
