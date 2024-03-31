@@ -6,27 +6,39 @@
 
     <resultMap type="com.ruoyi.tea.domain.Record" id="RecordResultMap">
         <id property="recordId" column="record_id"/>
+        <result property="productId" column="product_id"/>
         <result property="userId" column="user_id"/>
         <result property="shopId" column="shop_id"/>
         <result property="transactionAmount" column="transaction_amount"/>
+        <result property="transactionType" column="transaction_type"/>
         <result property="transactionTime" column="transaction_time"/>
         <result property="balance" column="balance"/>
     </resultMap>
 
+    <!-- 根据用户ID查询订单 -->
+    <select id="getRecordsByUserId" parameterType="Long" resultMap="RecordResultMap">
+        SELECT * FROM tos_record WHERE user_id = #{userId}
+    </select>
+
+    <!-- 查询全部订单 -->
+    <select id="getAllRecords" resultMap="RecordResultMap">
+        SELECT * FROM tos_record
+    </select>
+
     <!-- 添加交易记录 -->
     <insert id="addBalanceRecord" parameterType="BalanceRecord">
-        INSERT INTO tos_balance_record (user_id, shop_id, transaction_amount, transaction_time, balance)
-        VALUES (#{userId}, #{shopId}, #{transactionAmount}, #{transactionTime}, #{balance})
+        INSERT INTO tos_record (product_id, user_id, shop_id, transaction_amount, transaction_type, transaction_time, balance)
+        VALUES (#{productId}, #{userId}, #{shopId}, #{transactionAmount}, #{transactionType}, #{transactionTime}, #{balance})
     </insert>
 
     <!-- 删除交易记录 -->
     <delete id="deleteBalanceRecord" parameterType="Long">
-        DELETE FROM tos_balance_record WHERE record_id = #{recordId}
+        DELETE FROM tos_record WHERE record_id = #{recordId}
     </delete>
 
     <!-- 根据记录ID查询交易记录信息 -->
     <select id="getBalanceRecordById" parameterType="Long" resultMap="RecordResultMap">
-        SELECT * FROM tos_balance_record WHERE record_id = #{recordId}
+        SELECT * FROM tos_record WHERE record_id = #{recordId}
     </select>
 
 </mapper>

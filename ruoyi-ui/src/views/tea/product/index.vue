@@ -19,6 +19,9 @@
           <el-table-column label="商品价格" prop="price" align="center"></el-table-column>
           <el-table-column label="操作" align="center" width="280px">
             <template slot-scope="scope">
+              <el-button type="info" size="mini" @click="handlePurchase(scope.row)" v-hasPermi="['tea:product:purchase']">
+                购买
+              </el-button>
               <el-button type="success" size="mini" @click="handleView(scope.row)" v-hasPermi="['tea:product:detail']">
                 查看
               </el-button>
@@ -94,6 +97,7 @@
 <script>
 import {listProducts, addProduct, updateProduct, deleteProduct, getProduct} from '@/api/tea/product'
 import {getShopsByOwnerId} from "@/api/tea/shop";
+import {addRecord} from "@/api/tea/Record";
 
 export default {
   data() {
@@ -114,7 +118,7 @@ export default {
         productName: '',
         description: '',
         price: null,
-        productImage:''
+        productImage: ''
       },
       isReadOnly: false, // 是否只读模式
       // 查询参数
@@ -158,6 +162,22 @@ export default {
         price: null,
         merchantId: null
       }
+    },
+
+    // 处理购买操作
+    handlePurchase(row) {
+      // 获取购买商品信息
+      const {productId, price, shopId} = row;
+      // 调用添加订单记录接口
+      addRecord({
+        shopId: shopId,
+        productId: productId,
+        transactionAmount: price, // 使用购买商品的费用作为交易金额
+        transactionType: 1
+      }).then(() => {
+        // 添加订单记录成功后的处理逻辑
+        this.$message.success('购买成功！');
+      });
     },
 
     // 添加商品

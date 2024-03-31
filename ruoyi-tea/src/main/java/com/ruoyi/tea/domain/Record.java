@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  * @Author 范佳兴
  * @date 2024/3/29 11:01
  */
-@TableName("tos_balance_record")
+@TableName("tos_record")
 @Getter
 @Setter
 @ToString
@@ -28,6 +28,11 @@ public class Record implements Serializable {
      * 交易记录ID，主键
      */
     private Long recordId;
+
+    /**
+     * 商品ID
+     */
+    private Long productId;
 
     /**
      * 购买者ID
@@ -55,6 +60,11 @@ public class Record implements Serializable {
      * 交易额
      */
     private BigDecimal transactionAmount;
+
+    /**
+     * 交易类型（0：收入，1：支出）
+     */
+    private Integer transactionType;
 
     /**
      * 交易时间
