@@ -35,6 +35,12 @@ public class Record implements Serializable {
     private Long productId;
 
     /**
+     * 商品名称
+     */
+    @TableField(exist = false)
+    private String productName;
+
+    /**
      * 购买者ID
      */
     private Long userId;

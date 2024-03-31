@@ -4,8 +4,11 @@ import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.tea.domain.Product;
 import com.ruoyi.tea.domain.Record;
+import com.ruoyi.tea.domain.Shop;
 import com.ruoyi.tea.mapper.RecordMapper;
+import com.ruoyi.tea.service.ProductService;
 import com.ruoyi.tea.service.RecordService;
 import com.ruoyi.tea.service.ShopService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +35,8 @@ public class RecordServiceImpl implements RecordService {
 
     private final RecordMapper recordMapper;
 
+    private final ProductService productService;
+
     private final ISysRoleService iSysRoleService;
 
     private final ISysUserService iSysUserService;
@@ -51,12 +56,12 @@ public class RecordServiceImpl implements RecordService {
         if (role.equalsIgnoreCase("admin")) {
             startPage();
             List<Record> allRecords = recordMapper.getAllRecords();
-
+            fillShopProductUserName(allRecords);
             return allRecords;
         } else {
             startPage();
             List<Record> recordsByUserId = recordMapper.getRecordsByUserId(userId);
-
+            fillShopProductUserName(recordsByUserId);
             return recordsByUserId;
         }
     }
@@ -141,5 +146,22 @@ public class RecordServiceImpl implements RecordService {
         return recordMapper.getBalanceRecordById(recordId);
     }
 
-
+    /**
+     * 填充用户，商品和店铺名称
+     *
+     * @param records
+     */
+    private void fillShopProductUserName(List<Record> records){
+        for (Record record : records){
+            Long productId = record.getProductId();
+            Long shopId = record.getShopId();
+            Long userId = record.getUserId();
+            Product productById = productService.getProductById(productId);
+            Shop shopById = shopService.getShopById(shopId);
+            SysUser sysUser = iSysUserService.selectUserById(userId);
+            record.setProductName(productById.getProductName());
+            record.setShopName(shopById.getShopName());
+            record.setUserName(sysUser.getNickName());
+        }
+    }
 }
