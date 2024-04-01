@@ -89,6 +89,11 @@ public class ProductServiceImpl implements ProductService {
         return rows > 0;
     }
 
+    @Override
+    public boolean deleteProductByShopId(Long shopId){
+        return productMapper.deleteProductByShopId(shopId) > 0;
+    }
+
     /**
      * 填充商品名称
      * @param products

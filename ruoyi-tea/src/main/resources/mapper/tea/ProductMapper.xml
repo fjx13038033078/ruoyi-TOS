@@ -46,4 +46,9 @@
         DELETE FROM tos_product WHERE product_id = #{productId}
     </delete>
 
+    <!-- 根据店铺ID删除商品 -->
+    <delete id="deleteProductByShopId" parameterType="Long">
+        DELETE FROM tos_product WHERE shop_id = #{shopId}
+    </delete>
+
 </mapper>

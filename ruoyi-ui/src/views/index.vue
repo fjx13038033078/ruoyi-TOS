@@ -29,16 +29,11 @@
         </el-col>
         <el-col :span="12">
           <el-card style="margin-right: 20px; height: 420px;">
-            <h3 slot="header">统计图表</h3>
-            <div id="venueCourtChart" style="height: 300px;"></div> <!-- echarts 柱状图 -->
+            <h3 slot="header">商城简介</h3>
+            <p>请在这里填写更多的文字说明</p>
           </el-card>
         </el-col>
       </el-row>
-      <!-- 弹出的公告内容卡片 -->
-      <el-dialog :title="selectedNotice.title" :visible.sync="showNoticeDialog" width="780px" append-to-body>
-        <div slot="title" style="text-align: center;">{{ selectedNotice.title }}</div>
-        <div v-html="selectedNotice.content" class="notice-content"></div>
-      </el-dialog>
     </div>
   </div>
 </template>

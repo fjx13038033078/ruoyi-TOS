@@ -56,4 +56,12 @@ public interface ProductService {
      * @return 删除成功返回 true，否则返回 false
      */
     boolean deleteProduct(Long productId);
+
+    /**
+     * 根据店铺ID删除商品
+     *
+     * @param shopId 店铺ID
+     * @return 删除成功返回 true，否则返回 false
+     */
+    boolean deleteProductByShopId(Long shopId);
 }
