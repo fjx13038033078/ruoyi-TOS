@@ -3,6 +3,7 @@ package com.ruoyi.tea.service.impl;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.tea.domain.Shop;
+import com.ruoyi.tea.mapper.ProductMapper;
 import com.ruoyi.tea.mapper.ShopMapper;
 import com.ruoyi.tea.service.ProductService;
 import com.ruoyi.tea.service.ShopService;
@@ -28,7 +29,7 @@ public class ShopServiceImpl implements ShopService {
 
     private final ISysUserService iSysUserService;
 
-    private final ProductService productService;
+    private final ProductMapper productMapper;
 
     /**
      * 获取所有店铺列表
@@ -100,7 +101,7 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public boolean deleteShop(Long shopId) {
         int rows = shopMapper.deleteShop(shopId);
-        productService.deleteProductByShopId(shopId);
+        productMapper.deleteProductByShopId(shopId);
         return rows > 0;
     }
 
