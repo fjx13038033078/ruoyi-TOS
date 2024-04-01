@@ -4,6 +4,7 @@ import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.tea.domain.Shop;
 import com.ruoyi.tea.mapper.ShopMapper;
+import com.ruoyi.tea.service.ProductService;
 import com.ruoyi.tea.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,8 @@ public class ShopServiceImpl implements ShopService {
     private final ShopMapper shopMapper;
 
     private final ISysUserService iSysUserService;
+
+    private final ProductService productService;
 
     /**
      * 获取所有店铺列表
@@ -97,6 +100,7 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public boolean deleteShop(Long shopId) {
         int rows = shopMapper.deleteShop(shopId);
+        productService.deleteProductByShopId(shopId);
         return rows > 0;
     }
 
@@ -104,7 +108,6 @@ public class ShopServiceImpl implements ShopService {
     public void fillShopOwnerName(List<Shop> shops) {
         if (shops != null && !shops.isEmpty()) {
             for (Shop shop : shops) {
-                log.info("shop: "+ shop);
                 Long ownerId = shop.getOwnerId();
                 String ownerName = iSysUserService.selectUserById(ownerId).getNickName();
                 shop.setOwnerName(ownerName);
