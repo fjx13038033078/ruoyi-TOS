@@ -2,6 +2,7 @@ package com.ruoyi.tea.service.impl;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.tea.domain.Product;
@@ -151,17 +152,23 @@ public class RecordServiceImpl implements RecordService {
      *
      * @param records
      */
-    private void fillShopProductUserName(List<Record> records){
-        for (Record record : records){
+    private void fillShopProductUserName(List<Record> records) {
+        for (Record record : records) {
             Long productId = record.getProductId();
             Long shopId = record.getShopId();
             Long userId = record.getUserId();
             Product productById = productService.getProductById(productId);
             Shop shopById = shopService.getShopById(shopId);
             SysUser sysUser = iSysUserService.selectUserById(userId);
-            record.setProductName(productById.getProductName());
-            record.setShopName(shopById.getShopName());
-            record.setUserName(sysUser.getNickName());
+            if (record.getUserId() != null && StringUtils.isNotBlank(record.getUserName())) {
+                record.setProductName(productById.getProductName());
+            }
+            if (record.getShopId() != null && StringUtils.isNotBlank(record.getShopName())) {
+                record.setShopName(shopById.getShopName());
+            }
+            if (record.getUserId() != null && StringUtils.isNotBlank(record.getUserName())) {
+                record.setUserName(sysUser.getNickName());
+            }
         }
     }
 }
