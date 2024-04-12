@@ -19,7 +19,7 @@
           <el-table-column label="商品价格" prop="price" align="center"></el-table-column>
           <el-table-column label="操作" align="center" width="380px">
             <template slot-scope="scope">
-              <el-button type="warning" size="mini" @click="handleAddToCart(scope.row)">
+              <el-button type="warning" size="mini" @click="handleAddToCart(scope.row)" v-hasPermi="['tea:product:cart']">
                 加入购物车
               </el-button>
               <el-button type="info" size="mini" @click="handlePurchase(scope.row)" v-hasPermi="['tea:product:purchase']">

@@ -20,10 +20,10 @@
           </el-table-column>
           <el-table-column label="操作" align="center" width="200px">
             <template slot-scope="scope">
-              <el-button type="info" size="mini" @click="handleRemoveFromCart(scope.row)">
+              <el-button type="info" size="mini" @click="handleRemoveFromCart(scope.row)" v-hasPermi="['tea:shopCart:remove']">
                 移除购物车
               </el-button>
-              <el-button type="success" size="mini" @click="handlePurchase(scope.row)">
+              <el-button type="success" size="mini" @click="handlePurchase(scope.row)" v-hasPermi="['tea:shopCart:purchase']">
                 购买
               </el-button>
             </template>
