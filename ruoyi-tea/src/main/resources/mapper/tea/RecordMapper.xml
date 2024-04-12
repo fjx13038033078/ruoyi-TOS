@@ -26,7 +26,7 @@
     </select>
 
     <!-- 添加交易记录 -->
-    <insert id="addBalanceRecord" parameterType="BalanceRecord">
+    <insert id="addBalanceRecord" parameterType="Record">
         INSERT INTO tos_record (product_id, user_id, shop_id, transaction_amount, transaction_type, transaction_time, balance)
         VALUES (#{productId}, #{userId}, #{shopId}, #{transactionAmount}, #{transactionType}, #{transactionTime}, #{balance})
     </insert>

@@ -3,7 +3,6 @@ package com.ruoyi.web.controller.tea;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.featherball.domain.BalanceRecord;
 import com.ruoyi.tea.domain.Record;
 import com.ruoyi.tea.service.RecordService;
 import lombok.RequiredArgsConstructor;

@@ -39,8 +39,6 @@
 </template>
 <script>
 import {listNotice, getNotice} from "@/api/system/notice";
-import request from '@/utils/request';
-import {getVenueCourtCountMap} from "@/api/featherball/court";
 import * as echarts from 'echarts'
 
 
