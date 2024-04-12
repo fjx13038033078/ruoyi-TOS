@@ -21,6 +21,11 @@
         SELECT * FROM tos_shopping_cart WHERE cart_id = #{cartId}
     </select>
 
+    <!-- 根据用户ID获取购物车列表 -->
+    <select id="listCartItemsByUserId" parameterType="Long" resultMap="ShoppingCartResultMap">
+        SELECT * FROM tos_shopping_cart WHERE user_id = #{userId}
+    </select>
+
     <!-- 添加商品到购物车 -->
     <insert id="addProductToShoppingCart" parameterType="ShoppingCart">
         INSERT INTO tos_shopping_cart (user_id, product_id, quantity)

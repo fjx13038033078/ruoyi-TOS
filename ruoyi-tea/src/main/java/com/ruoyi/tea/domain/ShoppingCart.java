@@ -42,6 +42,12 @@ public class ShoppingCart implements Serializable {
     private Long productId;
 
     /**
+     * 商品
+     */
+    @TableField(exist = false)
+    private Product product;
+
+    /**
      * 商品数量
      */
     private int quantity;

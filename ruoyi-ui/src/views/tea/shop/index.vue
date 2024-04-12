@@ -46,13 +46,13 @@
       <div>
         <el-form :model="shopForm" label-width="100px">
           <el-form-item label="店铺名称">
-            <el-input v-model="shopForm.shopName"></el-input>
+            <el-input v-model="shopForm.shopName" :disabled="isReadOnly"></el-input>
           </el-form-item>
           <el-form-item label="店主名称">
-            <el-input v-model="shopForm.ownerName"></el-input>
+            <el-input v-model="shopForm.ownerName" :disabled="isReadOnly"></el-input>
           </el-form-item>
           <el-form-item label="店铺描述">
-            <el-input v-model="shopForm.shopDescription" type="textarea" autosize></el-input>
+            <el-input v-model="shopForm.shopDescription" type="textarea" autosize :disabled="isReadOnly"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -77,6 +77,7 @@ export default {
       dialogTitle: '',
       dialogButtonText: '',
       totalShops: 0,
+      isReadOnly: false, // 是否只读模式
       shopForm: {
         shopName: '',
         ownerId: '',
@@ -109,6 +110,8 @@ export default {
       this.dialogTitle = '查看店铺'
       this.dialogButtonText = '关闭'
       this.loading = true // 开启加载状态
+      // 将表单设置为只读模式
+      this.isReadOnly = true;
       getShop(row.shopId).then(response => {
         this.shopForm = response.data // 填充表单数据
         this.dialogVisible = true // 打开对话框
@@ -124,6 +127,7 @@ export default {
       this.dialogTitle = '新增店铺'
       this.dialogButtonText = '添加'
       this.dialogVisible = true
+      this.isReadOnly = false;
     },
 
     handleEdit(row) {
@@ -131,6 +135,7 @@ export default {
       this.dialogButtonText = '更新'
       this.shopForm = Object.assign({}, row)
       this.dialogVisible = true
+      this.isReadOnly = false;
     },
 
     handleDelete(row) {

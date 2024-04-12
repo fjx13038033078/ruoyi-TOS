@@ -17,8 +17,11 @@
           <el-table-column label="商品名称" prop="productName" align="center"></el-table-column>
           <el-table-column label="商品描述" prop="description" align="center"></el-table-column>
           <el-table-column label="商品价格" prop="price" align="center"></el-table-column>
-          <el-table-column label="操作" align="center" width="280px">
+          <el-table-column label="操作" align="center" width="380px">
             <template slot-scope="scope">
+              <el-button type="warning" size="mini" @click="handleAddToCart(scope.row)">
+                加入购物车
+              </el-button>
               <el-button type="info" size="mini" @click="handlePurchase(scope.row)" v-hasPermi="['tea:product:purchase']">
                 购买
               </el-button>
@@ -98,6 +101,7 @@
 import {listProducts, addProduct, updateProduct, deleteProduct, getProduct} from '@/api/tea/product'
 import {getShopsByOwnerId} from "@/api/tea/shop";
 import {addRecord} from "@/api/tea/Record";
+import {addProductToShoppingCart} from "@/api/tea/shoppingCart";
 
 export default {
   data() {
@@ -275,6 +279,17 @@ export default {
       } else {
         this.addProduct() // 添加商品
       }
+    },
+
+    // 添加商品到购物车
+    handleAddToCart(row) {
+      // 调用添加商品到购物车接口
+      addProductToShoppingCart({
+        productId: row.productId, // 商品ID
+      }).then(() => {
+        // 添加成功提示
+        this.$message.success('商品已成功加入购物车！');
+      });
     },
 
     // 关闭对话框

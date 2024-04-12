@@ -51,4 +51,12 @@ public interface ShoppingCartMapper {
      * @return 删除成功的购物车数量
      */
     int deleteProductFromShoppingCart(Long cartId);
+
+    /**
+     * 根据用户ID获取购物车列表
+     *
+     * @param userId
+     * @return
+     */
+    List<ShoppingCart> listCartItemsByUserId(Long userId);
 }

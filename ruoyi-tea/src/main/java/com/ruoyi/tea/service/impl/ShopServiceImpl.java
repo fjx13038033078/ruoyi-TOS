@@ -59,7 +59,6 @@ public class ShopServiceImpl implements ShopService {
      */
     @Override
     public Shop getShopById(Long shopId) {
-        log.info("shopId： "+ shopId);
         Shop shop = shopMapper.getShopById(shopId);
         fillShopOwnerName(Collections.singletonList(shop));
         return shop;
@@ -108,6 +107,7 @@ public class ShopServiceImpl implements ShopService {
     //填充店铺店主姓名
     public void fillShopOwnerName(List<Shop> shops) {
         if (shops != null && !shops.isEmpty()) {
+            log.info("shops： "+ shops);
             for (Shop shop : shops) {
                 Long ownerId = shop.getOwnerId();
                 String ownerName = iSysUserService.selectUserById(ownerId).getNickName();

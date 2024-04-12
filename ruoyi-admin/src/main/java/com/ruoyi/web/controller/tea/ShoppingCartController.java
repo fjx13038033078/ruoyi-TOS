@@ -54,7 +54,7 @@ public class ShoppingCartController extends BaseController {
     /**
      * 更新购物车商品数量
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     public AjaxResult updateProductQuantity(@RequestBody ShoppingCart shoppingCart) {
         return toAjax(shoppingCartService.updateProductQuantity(shoppingCart));
     }
@@ -62,7 +62,7 @@ public class ShoppingCartController extends BaseController {
     /**
      * 从购物车删除商品
      */
-    @DeleteMapping("/delete")
+    @GetMapping("/delete")
     public AjaxResult deleteProductFromShoppingCart(@RequestParam Long cartId) {
         return toAjax(shoppingCartService.deleteProductFromShoppingCart(cartId));
     }

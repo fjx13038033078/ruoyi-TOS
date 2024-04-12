@@ -8,7 +8,9 @@ import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.tea.domain.Product;
 import com.ruoyi.tea.domain.Record;
 import com.ruoyi.tea.domain.Shop;
+import com.ruoyi.tea.mapper.ProductMapper;
 import com.ruoyi.tea.mapper.RecordMapper;
+import com.ruoyi.tea.mapper.ShopMapper;
 import com.ruoyi.tea.service.ProductService;
 import com.ruoyi.tea.service.RecordService;
 import com.ruoyi.tea.service.ShopService;
@@ -37,6 +39,10 @@ public class RecordServiceImpl implements RecordService {
     private final RecordMapper recordMapper;
 
     private final ProductService productService;
+
+    private final ProductMapper productMapper;
+
+    private final ShopMapper shopMapper;
 
     private final ISysRoleService iSysRoleService;
 
@@ -92,7 +98,7 @@ public class RecordServiceImpl implements RecordService {
         }
         //获取店主当前余额
         Long shopId = record.getShopId();
-        Long ownerId = shopService.getShopById(shopId).getOwnerId();
+        Long ownerId = shopMapper.getShopById(shopId).getOwnerId();
         BigDecimal ownerBalance = iSysUserService.selectUserById(ownerId).getBalance();
         // 更新用户余额信息
         BigDecimal newBalance = userBalance.subtract(transactionAmount);
@@ -157,17 +163,25 @@ public class RecordServiceImpl implements RecordService {
             Long productId = record.getProductId();
             Long shopId = record.getShopId();
             Long userId = record.getUserId();
-            Product productById = productService.getProductById(productId);
-            Shop shopById = shopService.getShopById(shopId);
+
+            Product productById = productMapper.getProductById(productId);
+            Shop shopById = shopMapper.getShopById(shopId);
             SysUser sysUser = iSysUserService.selectUserById(userId);
-            if (record.getUserId() != null && StringUtils.isNotBlank(record.getUserName())) {
+
+            if (productById != null) {
                 record.setProductName(productById.getProductName());
+            } else {
+                record.setProductName("商品已下架");
             }
-            if (record.getShopId() != null && StringUtils.isNotBlank(record.getShopName())) {
+            if (shopById != null) {
                 record.setShopName(shopById.getShopName());
+            } else {
+                record.setShopName("店铺已下架");
             }
-            if (record.getUserId() != null && StringUtils.isNotBlank(record.getUserName())) {
+            if (sysUser != null) {
                 record.setUserName(sysUser.getNickName());
+            } else {
+                record.setUserName("用户已注销");
             }
         }
     }
