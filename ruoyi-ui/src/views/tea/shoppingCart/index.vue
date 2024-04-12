@@ -92,7 +92,10 @@ export default {
         transactionAmount: price, // 使用购买商品的数量作为交易金额
         shopId: shopId,
         transactionType: 1 // 购买类型为 1
-      })
+      }).then(() => {
+        // 添加订单记录成功后的处理逻辑
+        this.$message.success('购买成功！');
+      });
     }
   }
 }

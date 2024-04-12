@@ -1,4 +1,6 @@
 package com.ruoyi.tea.service.impl;
+import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.tea.domain.Product;
 import com.ruoyi.tea.domain.Shop;
 import com.ruoyi.tea.mapper.ProductMapper;
@@ -8,7 +10,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 商品管理 Service 实现类
@@ -25,6 +31,8 @@ public class ProductServiceImpl implements ProductService {
 
     private final ShopService shopService;
 
+    private final ISysRoleService iSysRoleService;
+
     /**
      * 获取所有商品列表
      *
@@ -32,9 +40,24 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public List<Product> getAllProducts() {
-        List<Product> allProducts = productMapper.getAllProducts();
-        fillShopName(allProducts);
-        return allProducts;
+        // 获取当前登录用户ID
+        Long userId = SecurityUtils.getUserId();
+        String role = iSysRoleService.selectStringRoleByUserId(userId);
+        if (role.equals("owner")){
+            List<Shop> shops = shopService.getShopsByOwnerId();
+            Set<Product> products = new HashSet<>();
+            for (Shop shop : shops){
+                List<Product> productsByShopId = productMapper.getProductsByShopId(shop.getShopId());
+                products.addAll(productsByShopId);
+            }
+            ArrayList<Product> products1 = new ArrayList<>(products);
+            fillShopName(products1);
+            return products1;
+        } else {
+            List<Product> allProducts = productMapper.getAllProducts();
+            fillShopName(allProducts);
+            return allProducts;
+        }
     }
 
     @Override

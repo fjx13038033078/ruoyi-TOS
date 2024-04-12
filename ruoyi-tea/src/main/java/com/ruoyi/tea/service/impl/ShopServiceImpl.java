@@ -1,6 +1,7 @@
 package com.ruoyi.tea.service.impl;
 
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.tea.domain.Shop;
 import com.ruoyi.tea.mapper.ProductMapper;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+
+import static com.ruoyi.common.utils.PageUtils.startPage;
 
 /**
  * 店铺管理 Service 实现类
@@ -31,6 +34,8 @@ public class ShopServiceImpl implements ShopService {
 
     private final ProductMapper productMapper;
 
+    private final ISysRoleService iSysRoleService;
+
     /**
      * 获取所有店铺列表
      *
@@ -38,9 +43,20 @@ public class ShopServiceImpl implements ShopService {
      */
     @Override
     public List<Shop> getAllShops() {
-        List<Shop> allShops = shopMapper.getAllShops();
-        fillShopOwnerName(allShops);
-        return allShops;
+        // 获取当前登录用户ID
+        Long userId = SecurityUtils.getUserId();
+        String role = iSysRoleService.selectStringRoleByUserId(userId);
+        if (role.equalsIgnoreCase("owner")){
+            startPage();
+            List<Shop> shopsByOwnerId = getShopsByOwnerId();
+            fillShopOwnerName(shopsByOwnerId);
+            return shopsByOwnerId;
+        } else {
+            startPage();
+            List<Shop> allShops = shopMapper.getAllShops();
+            fillShopOwnerName(allShops);
+            return allShops;
+        }
     }
 
     @Override
@@ -87,6 +103,11 @@ public class ShopServiceImpl implements ShopService {
      */
     @Override
     public boolean updateShop(Shop shop) {
+        Long ownerId = shop.getOwnerId();
+        Long userId = SecurityUtils.getUserId();
+        if (!ownerId.equals(userId)) {
+            throw new RuntimeException("您没有权限修改该店铺信息");
+        }
         int rows = shopMapper.updateShop(shop);
         return rows > 0;
     }
