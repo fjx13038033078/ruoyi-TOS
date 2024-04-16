@@ -12,7 +12,7 @@
               {{ scope.row.product.productName }}
             </template>
           </el-table-column>
-          <el-table-column label="商品数量" prop="quantity" align="center"></el-table-column>
+<!--          <el-table-column label="商品数量" prop="quantity" align="center"></el-table-column>-->
           <el-table-column label="商品单价" align="center">
             <template slot-scope="scope">
               {{ scope.row.product.price }}

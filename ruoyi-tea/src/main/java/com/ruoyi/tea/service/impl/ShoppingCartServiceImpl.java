@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.ruoyi.common.utils.PageUtils.startPage;
 
@@ -78,6 +79,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public boolean addProductToShoppingCart(ShoppingCart shoppingCart) {
         shoppingCart.setQuantity(1);
         shoppingCart.setUserId(SecurityUtils.getUserId());
+        if (shoppingCartMapper.listCartItemsByUserId(SecurityUtils.getUserId())
+                .stream()
+                .map(ShoppingCart::getProductId)
+                .collect(Collectors.toList())
+                .contains(shoppingCart.getProductId())){
+            throw new RuntimeException("该商品已存在购物车中");
+        }
         int rows = shoppingCartMapper.addProductToShoppingCart(shoppingCart);
         return rows > 0;
     }
