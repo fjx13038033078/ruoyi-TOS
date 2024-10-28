@@ -16,14 +16,14 @@
             <el-card shadow="hover" style="margin-top: 15px; border-width: 2px; border-color: #dcdfe6; border-style: solid;">
               <ImagePreview :src="product.productImage" :disabled="isReadOnly"></ImagePreview>
               <div class="product-info">
-                <h3>{{ product.productName }}</h3>
+                <h3 style="font-weight: bolder">{{ product.productName }}</h3>
                 <p>{{ product.description }}</p>
                 <p>价格: {{ product.price }} 元</p>
               </div>
               <div class="card-footer" style="margin-right: 20px; margin-top: 10px;">
                 <el-button type="info" size="mini" @click="handleView(product)" v-hasPermi="['tea:product:detail']">查看</el-button>
-                <el-button type="primary" size="mini" @click="handlePurchase(product)" v-hasPermi="['tea:product:purchase']">购买</el-button>
                 <el-button type="warning" size="mini" @click="handleAddToCart(product)" v-hasPermi="['tea:product:cart']">加入购物车</el-button>
+                <el-button type="danger" size="mini" @click="handlePurchase(product)" v-hasPermi="['tea:product:purchase']">购买</el-button>
               </div>
             </el-card>
           </el-col>
@@ -170,7 +170,7 @@ export default {
             console.log(`商品 ${product.productId} 图片已设置为:`, productDetails.data.productImage);
           }).catch(error => {
             console.error(`获取商品 ${product.productId} 图片失败:`, error);
-            product.productImage = 'default-image.jpg'; // 设置默认图片
+            product.productImage = '../assets/images/03.jpg'; // 设置默认图片
           })
         );
         // 等待所有图片获取完成后再停止 loading

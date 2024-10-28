@@ -3,6 +3,13 @@
 <!--    <div id="curtain">-->
 <!--      <h1 data-heading="管">茶商城管理系统</h1>-->
 <!--    </div>-->
+    <div id="curtain" style="width: 100%; height: 100px">
+      <el-row justify="center" align="middle" style="height: 100px" class="background-title">
+        <el-col :span="24">
+          <h1 class="centered-title" style="margin-top: -8px" data-text="校园二手商品交易系统">{{ titleText }}</h1>
+        </el-col>
+      </el-row>
+    </div>
     <div>
       <el-row style="margin-top: 20px;">
         <el-col :span="12">
@@ -47,6 +54,7 @@ export default {
   dicts: ['sys_notice_status', 'sys_notice_type'],
   data() {
     return {
+      titleText : '校园二手商品交易系统',
       // 遮罩层
       loading: true,
       // 选中数组
@@ -144,88 +152,55 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.notice-content::v-deep img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
-$h1: rgba(45, 45, 45, 1);
-$blue: #98b5cc;
-$yellow: #e30f16;
-$outline: rgba(#fff, .4);
-$shadow: rgba($yellow, .5);
 
 #curtain {
-  background: linear-gradient(45deg, rgb(182, 182, 182) 9%, rgb(56, 56, 56) 100%);
-  width: 100%;
-  height: 200px;
-  border-radius: 30px;
-  margin-bottom: 15px;
+  position: relative;
 }
 
-h1 {
-  font-family: '阿里妈妈东方大楷 Regular', sans-serif;
-  font-size: 80px;
-  text-align: center;
-  line-height: 1;
-  margin: 0;
-  top: 13%;
+.background-title {
+  background-color: #4158d0;
+  background-image: linear-gradient(43deg, #4158d0 0%, #c850c0 46%, #ffcc70 100%);
+}
+
+.centered-title {
+  position: absolute;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-size: 60px;
+  white-space: nowrap;
+  font-weight: bold;
+  font-family: 'Microsoft YaHei';
+}
+
+.centered-title::before {
+  content: attr(data-text);
   position: absolute;
-  color: $h1;
-  letter-spacing: 1rem;
-
-  &:before {
-    content: attr(data-heading);
-    position: absolute;
-    overflow: hidden;
-    color: $yellow;
-    width: 100%;
-    z-index: 5;
-    text-shadow: none;
-    left: 325px;
-    text-align: left;
-    animation: flicker 3s linear infinite;
-  }
+  transform: rotateX(180deg);
+  transform-origin: bottom;
+  line-height: 52px;
+  background: linear-gradient(0deg, #000 0, transparent 80%);
+  -webkit-background-clip: text;
+  color: transparent;
+  opacity: 0.5;
 }
 
-@keyframes flicker {
-
-  0%,
-  19.999%,
-  22%,
-  62.999%,
-  64%,
-  64.999%,
-  70%,
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+  }
   100% {
-    opacity: .99;
-    text-shadow: -1px -1px 0 $outline, 1px -1px 0 $outline,
-    -1px 1px 0 $outline, 1px 1px 0 $outline,
-    0 -2px 8px, 0 0 2px, 0 0 5px #ff7e00,
-    0 0 5px #ff4444, 0 0 2px #ff7e00, 0 2px 3px #000;
-  }
-
-  20%,
-  21.999%,
-  63%,
-  63.999%,
-  65%,
-  69.999% {
-    opacity: 0.4;
-    text-shadow: none;
+    transform: translateX(100%);
   }
 }
 
-@font-face {
-  font-family: "阿里妈妈东方大楷 Regular";
-  font-weight: 400;
-  src: url("../assets/fonts/AlimamaDongFangDaKai-Regular.woff2") format("woff2"),
-  url("../assets/fonts/AlimamaDongFangDaKai-Regular.woff") format("woff");
-  font-display: swap;
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 </style>
